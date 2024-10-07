@@ -80,18 +80,20 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { QTableProps } from 'quasar';
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useApiStore } from '../stores/api-store';
+/* interface */
 interface btnType {
   label: string;
   icon: string;
   status: string;
 }
-const blockData = ref([
-  {
-    name: 'test',
-    age: 25,
-  },
-]);
+
+/* store */
+const apiStore = useApiStore();
+
+/* variable */
+const blockData = computed(() => apiStore.getDate);
 const tableConfig = ref([
   {
     label: '姓名',
@@ -123,9 +125,16 @@ const tempData = ref({
   name: '',
   age: '',
 });
+
+/* function */
 function handleClickOption(btn, data) {
   // ...
 }
+
+/* lifecycle */
+onMounted(() => {
+  apiStore.actionGetDate();
+});
 </script>
 
 <style lang="scss" scoped>
