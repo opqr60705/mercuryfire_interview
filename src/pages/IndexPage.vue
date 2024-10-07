@@ -4,7 +4,9 @@
       <div class="q-mb-xl">
         <q-input v-model="tempData.name" label="姓名" />
         <q-input v-model="tempData.age" label="年齡" />
-        <q-btn color="primary" class="q-mt-md">新增</q-btn>
+        <q-btn @click="handleClickCreate()" color="primary" class="q-mt-md"
+          >新增</q-btn
+        >
       </div>
 
       <q-table
@@ -127,6 +129,17 @@ const tempData = ref({
 });
 
 /* function */
+function handleClickCreate() {
+  // apiStore.actionCreateDate(tempData.value);
+  axios
+    .post('https://dahua.metcfire.com.tw/api/CRUDTest', tempData.value)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 function handleClickOption(btn, data) {
   // ...
 }
