@@ -134,14 +134,49 @@ function handleClickCreate() {
   axios
     .post('https://dahua.metcfire.com.tw/api/CRUDTest', tempData.value)
     .then((res) => {
-      console.log(res);
+      console.log(res.data);
+      if (res.data === true) {
+        apiStore.actionGetDate();
+      } else {
+        console.log('新增失敗');
+      }
     })
     .catch((err) => {
       console.log(err);
     });
 }
 function handleClickOption(btn, data) {
-  // ...
+  console.log(btn, data);
+  // 判斷btn狀態
+  if (btn.status === 'edit') {
+    // Edit
+    axios
+      .patch('https://dahua.metcfire.com.tw/api/CRUDTest', data)
+      .then((res) => {
+        // console.log(res);
+        if (res.data === true) {
+          apiStore.actionGetDate();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else if (btn.status === 'delete') {
+    // Delete
+    axios
+      .delete(`https://dahua.metcfire.com.tw/api/CRUDTest/${data.id}`, data)
+      .then((res) => {
+        // console.log(res);
+        if (res.data === true) {
+          apiStore.actionGetDate();
+        } else {
+          console.log('刪除失敗');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 /* lifecycle */
